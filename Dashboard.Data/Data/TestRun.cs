@@ -6,19 +6,17 @@ namespace Dashboard.Data.Data
     public class TestRun
     {
         [Key]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [ForeignKey("ProjectFK")]
-        public Project Project { get; set; }
+        public int ProjectId { get; set; }
+        public Project Project { get; set; } = null!;
 
         public int ForeignId { get; set; }
-
         public string Name { get; set; }
 
         public int PassedTests { get; set; } = 0;
-
         public int FailedTests { get; set; } = 0;
-
         public int OtherTests { get; set; } = 0;
     }
 }
