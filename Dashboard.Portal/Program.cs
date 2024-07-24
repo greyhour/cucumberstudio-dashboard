@@ -1,6 +1,7 @@
-using Dashboard.Components;
+using Dashboard.Core.Services;
+using Dashboard.Portal.Components;
 
-namespace Dashboard
+namespace Dashboard.Portal
 {
     public class Program
     {
@@ -11,6 +12,8 @@ namespace Dashboard
             // Add services to the container.
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
+
+            builder.Services.AddSingleton<ProjectService>();
 
             var app = builder.Build();
 

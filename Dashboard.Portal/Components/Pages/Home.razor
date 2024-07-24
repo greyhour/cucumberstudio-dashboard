@@ -1,0 +1,24 @@
+﻿@page "/"
+@using Dashboard.Data.Data
+@using Dashboard.Core.Services;
+@inject ProjectService projectService;
+
+<PageTitle>Dashboard</PageTitle>
+
+@foreach (var project in ProjectList)
+{
+    <p>@project.ForeignId | @project.Name</p>
+}
+
+
+
+
+
+@code {
+    List<Project> ProjectList = new List<Project>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        ProjectList = await projectService.GetAllProjects();
+    }
+}
