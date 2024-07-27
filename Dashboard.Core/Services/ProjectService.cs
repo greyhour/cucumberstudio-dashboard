@@ -21,7 +21,19 @@ namespace Dashboard.Core.Services
 
         public async Task<List<Project>> GetAllProjects()
         {
-            return await dbContext.Project.AsNoTracking().ToListAsync();
+            List<Project> projects = await dbContext.Project.AsNoTracking().ToListAsync();
+            foreach (var project in projects)
+            {
+                List<TestGroup> testGroups = await dbContext.TestGroup.AsNoTracking().ToListAsync();
+
+                foreach(TestType type in Enum.GetValues<TestType>())
+                {
+                    List<TestGroup> filteredTestGroups = testGroups.Where(g => g.TestType == type).ToList();
+                    int totalTests = filteredTestGroups.Sum(g => g.TestCount);
+                    project.TestGroups.Add(new TestGroup(type, totalTests));
+                }
+            }
+            return projects;
         }
     }
 }

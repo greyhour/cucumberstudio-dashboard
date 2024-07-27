@@ -11,6 +11,8 @@ namespace Dashboard.Data
 
         public DbSet<TestRun> TestRun { get; set; }
 
+        public DbSet<TestGroup> TestGroup { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(_connectionString);

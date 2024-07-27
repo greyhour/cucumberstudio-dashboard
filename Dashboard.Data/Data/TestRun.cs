@@ -5,6 +5,14 @@ namespace Dashboard.Data.Data
 {
     public class TestRun
     {
+        public TestRun() { }
+        public TestRun(int _projectId, int _foreignId, string _name) 
+        {
+            ProjectId = _projectId;
+            ForeignId = _foreignId;
+            Name = _name;
+        }
+
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -15,8 +23,6 @@ namespace Dashboard.Data.Data
         public int ForeignId { get; set; }
         public string Name { get; set; }
 
-        public int PassedTests { get; set; } = 0;
-        public int FailedTests { get; set; } = 0;
-        public int OtherTests { get; set; } = 0;
+        public ICollection<TestGroup> TestGroups { get; internal set; } = new List<TestGroup>();
     }
 }

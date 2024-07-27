@@ -12,5 +12,8 @@ namespace Dashboard.Data.Data
         public int ForeignId { get; set; }
 
         public ICollection<TestRun> TestRuns { get; internal set; } = new List<TestRun>();
+
+        [NotMapped]
+        public IList<TestGroup> TestGroups { get; internal set; } = new List<TestGroup>();
     }
 }

@@ -1,24 +1,44 @@
 ﻿@page "/"
 @using Dashboard.Data.Data
-@using Dashboard.Core.Services;
-@inject ProjectService projectService;
+@using Dashboard.Core.Services
+@inject ProjectService ProjectService;
 
 <PageTitle>Dashboard</PageTitle>
 
-@foreach (var project in ProjectList)
-{
-    <p>@project.ForeignId | @project.Name</p>
-}
 
+<RadzenRow Gap="1rem" RowGap="1rem" Class="rz-m-0 rz-m-md-12">
+    <RadzenColumn Size="12" SizeMD="3">
 
+        @foreach (var project in ProjectList)
+        {
+            <RadzenCard Variant="Variant.Flat" Class="rz-background-color-info-lighter">
+                <RadzenStack Style="width: 100%; max-width: 600px;">
+                    <RadzenChart>
+                        <RadzenDonutSeries Fills="@donutColor" Data="@project.TestGroups" CategoryProperty="TestTypeString" ValueProperty="TestCount" TotalAngle="360" StartAngle="90">
+                            <TitleTemplate>
+                                <div class="rz-donut-content">
+                                    <div>@project.Name</div>
+                                    <div>@project.TestGroups.Single(g => g.TestType == TestType.Passed).TestCount Passed</div>
+                                    <div>@project.TestGroups.Single(g => g.TestType == TestType.Failed).TestCount Failed</div>
+                                </div>
+                            </TitleTemplate>
+                        </RadzenDonutSeries>
+                    </RadzenChart>
+                </RadzenStack>
+            </RadzenCard>
+        }
+
+    </RadzenColumn>
+</RadzenRow>
 
 
 
 @code {
+    string[] donutColor = { "#5ced73", "#FF0000", "#cdcdcd" };
     List<Project> ProjectList = new List<Project>();
 
     protected override async Task OnInitializedAsync()
     {
-        ProjectList = await projectService.GetAllProjects();
+        ProjectList = await ProjectService.GetAllProjects();
     }
 }

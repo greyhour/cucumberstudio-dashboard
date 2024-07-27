@@ -1,5 +1,6 @@
 using Dashboard.Core.Services;
 using Dashboard.Portal.Components;
+using Radzen;
 
 namespace Dashboard.Portal
 {
@@ -14,6 +15,10 @@ namespace Dashboard.Portal
                 .AddInteractiveServerComponents();
 
             builder.Services.AddSingleton<ProjectService>();
+            builder.Services.AddSingleton<TestRunService>();
+            builder.Services.AddSingleton<TestGroupService>();
+
+            builder.Services.AddRadzenComponents();
 
             var app = builder.Build();
 
